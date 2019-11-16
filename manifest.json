@@ -1,0 +1,20 @@
+{
+    "manifest_version": 2,
+    "name": "Crack Head",
+    "version": "0.1",
+    "content_scripts": [
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "js": ["crackhead.js"]
+        }
+    ],
+    "background": {
+        "scripts": ["buttonWrapper.js"]
+    },
+    "browser_action": {
+        "default_icon": "crackhead.png"
+    },
+    "permissions": ["tabs"]
+}
