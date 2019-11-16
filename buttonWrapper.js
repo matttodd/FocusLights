@@ -24,17 +24,13 @@ async function includingBadSite() {
 }
 
 function buttonClicked(_) {
-    window.setInterval(freakOut, 1000);
+    freakOut();
 }
 
-function freakOut() {
-    // var temp = window.setInterval(turnLights, 1000);
-    // window.clearInterval(temp);
-    if(includingBadSite()) {
-        console.log("PLEASE");
-        window.setInterval(turnLights, 1000);
-    } else {
-        turnOff();
+async function freakOut() {
+    console.log("im alive")
+    while(await includingBadSite()) {
+        turnLights();
     }
 }
 
