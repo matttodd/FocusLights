@@ -1,0 +1,14 @@
+.jumbotron {
+    background-color: #f4511e; /* Orange */
+    color: #ffffff;
+    margin-bottom: 0px;
+  }
+
+  .pad {
+      margin: 8px;
+  }
+
+  .align-middle {
+      margin-top: auto;
+      margin-bottom: auto;
+  }
