@@ -61,18 +61,8 @@ function turnOff() {
 //1,4
 
 function startTimer(hours, minutes) {
-    // console.log("bang")
-    // var hours = document.getElementById("hours").value;
-    // var minutes = document.getElementById("minutes").value;
     var countDownDate = new Date();
-    console.log(countDownDate)
-    // console.log(countDownDate.getMinutes())
-    // countDownDate.setHours(countDownDate.getHours() + hours, countDownDate.getMinutes() + minutes)
-    // countDownDate.setMinutes()
     countDownDate = new Date(countDownDate.getTime() + (hours * 60 * 60000) + (minutes * 60000))
-    console.log(countDownDate)
-    // console.log(hours)
-    // console.log(minutes)
     var x = setInterval(function() {
   
     // Get today's date and time
@@ -80,8 +70,6 @@ function startTimer(hours, minutes) {
     
     // Find the distance between now and the count down date
     var distance = countDownDate - now;
-    console.log(countDownDate)
-    console.log(now)
     console.log(distance)
     
     // Time calculations for days, hours, minutes and seconds
