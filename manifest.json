@@ -11,10 +11,11 @@
         }
     ],
     "background": {
-        "scripts": ["buttonWrapper.js"]
+        "scripts": ["buttonWrapper.js", "popup.js"]
     },
     "browser_action": {
-        "default_icon": "crackhead.png"
+        "default_icon": "crackhead.png",
+        "default_popup": "popup.html"
     },
     "permissions": ["tabs"]
 }
