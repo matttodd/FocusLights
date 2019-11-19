@@ -69,8 +69,26 @@ function startTimer() {
 }
 
 window.onload = function() {
-  console.log(startTimer)
+  // console.log(startTimer)
   document.addEventListener("DOMContentLoaded", function() {
-    document.getElementById("submit").onclick = startTimer;
+    document.getElementById("submit").onclick = sendStart;
+  });
+}
+
+chrome.runtime.onMessage.addListener(
+  function(request, sender, sendResponse){
+      if(request.msg == "send_timer") {
+        document.getElementById("demo").textContent = request.text;
+      }
+  }
+);
+
+function sendStart() {
+  var hours = document.getElementById("hours").value;
+  var minutes = document.getElementById("minutes").value;
+  chrome.runtime.sendMessage({
+    msg: "startFunc",
+    hours: hours,
+    minutes: minutes
   });
 }
