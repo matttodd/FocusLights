@@ -8,6 +8,7 @@ chrome.runtime.onMessage.addListener(
     console.log(request)
     if(request.msg == "send_timer") {
       document.getElementById("demo").innerHTML = request.timer;
+      document.getElementById("submit").disabled = true;
       if(request.timer == "EXPIRED") {
         document.getElementById("submit").disabled = false;
       }

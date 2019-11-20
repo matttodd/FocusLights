@@ -6,7 +6,7 @@ var url2 = host + "/api/hU6-hgDMjApmZQk0kDUz4T5KKr3wl0-GI-W4IbEC/lights/4/state"
 chrome.browserAction.onClicked.addListener(buttonClicked);
 
 async function includingBadSite() {
-    await chrome.tabs.query({}, function (tabs) {
+    chrome.tabs.query({}, function (tabs) {
         for (tab in tabs) {
             for(badSite in badSites) {
                 // console.log(badSites[badSite]);
@@ -14,11 +14,19 @@ async function includingBadSite() {
                 // console.log(tabs[tab].url.includes(badSites[badSite]));
                 if(tabs[tab].url.includes(badSites[badSite])) {
                     console.log(true)
+                    turnLights(url);
+                    turnLights(url2);
+                    turnOnOff(url);
+                    turnOnOff(url2);
                     return true;
                 }
             }
         }
         console.log(false)
+        turnOn(url);
+        turnOn(url2);
+        SetHueTo(url, 8418);
+        SetHueTo(url2, 8418);
         return false;
     });
 }
@@ -28,32 +36,44 @@ function buttonClicked(_) {
 }
 
 async function freakOut() {
-    console.log("im alive")
-    while(await includingBadSite()) {
-        turnLights();
-    }
+    // console.log("im alive")
+    await includingBadSite()
 }
 
-function turnLights() {
+function turnLights(light) {
     var xhttp = new XMLHttpRequest();
     var body = {"hue": Math.floor(Math.random() * 65535.0)}
-    console.log(body)
-    xhttp.open("PUT", url, true);
-    xhttp.open("PUT", url2, true);
+    xhttp.open("PUT", light, true);
     xhttp.setRequestHeader("Content-type", "application/json");
     xhttp.send(JSON.stringify(body));
     // var response = JSON.parse(xhttp.responseText);
 }
 
-function turnOff() {
+function turnOnOff(light) {
     var xhttp = new XMLHttpRequest();
-    var body = {"on": false}
-    console.log(body)
-    xhttp.open("PUT", url, true);
-    xhttp.open("PUT", url2, true);
+    var onOrOff = Math.floor(Math.random() * 2.0);
+    var bool = onOrOff == 0 ? false : true;
+    var body = {"on": bool};
+    xhttp.open("PUT", light, true);
     xhttp.setRequestHeader("Content-type", "application/json");
     xhttp.send(JSON.stringify(body));
     // var response = JSON.parse(xhttp.responseText);
+}
+
+function SetHueTo(light, hue) {
+    var xhttp = new XMLHttpRequest();
+    var body = {"hue": hue}
+    xhttp.open("PUT", light, true);
+    xhttp.setRequestHeader("Content-type", "application/json");
+    xhttp.send(JSON.stringify(body));
+}
+
+function turnOn(light) {
+    var xhttp = new XMLHttpRequest();
+    var body = {"on": true}
+    xhttp.open("PUT", light, true);
+    xhttp.setRequestHeader("Content-type", "application/json");
+    xhttp.send(JSON.stringify(body));
 }
 
 //10.0.0.98
@@ -84,8 +104,12 @@ function startTimer(hours, minutes) {
     if (distance < 0) {
         clearInterval(x);
         text = "EXPIRED";
+        turnOn(url);
+        turnOn(url2);
+        SetHueTo(url, 8418);
+        SetHueTo(url2, 8418);
     } else {
-        //lights
+        freakOut();//lights
     }
     var body = {
         msg: "send_timer",
@@ -93,7 +117,7 @@ function startTimer(hours, minutes) {
     }
     console.log(body);
       chrome.runtime.sendMessage(body);
-    }, 1000);
+    }, 500);
   }
 
 chrome.runtime.onMessage.addListener(
